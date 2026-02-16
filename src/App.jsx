@@ -52,7 +52,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/simulation" element={<Navigate to="/" replace />} />
-              <Route path="/simulations/:id" element={<SimulationDetail />} />
+              <Route path="/simulation/:id" element={<SimulationDetail />} />
             </Routes>
           </main>
 
