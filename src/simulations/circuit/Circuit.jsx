@@ -182,9 +182,11 @@ const Circuit = () => {
 
               <CircuitCanvas 
   components={components}
-  setComponents={setComponents}
+  updateComponent={updateComponent}  
   isRunning={isRunning}
   isFullscreen={isFullscreen}
+  current={current}
+  voltage={voltage}
 />
             </div>
 
