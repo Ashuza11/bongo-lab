@@ -25,12 +25,13 @@ const InclinedPlane = () => {
   };
 
   const {
-    angle, setAngle,
-    friction, setFriction,
-    mass, setMass,
-    isRunning, setIsRunning,
-    getBlockPosition
-  } = useInclinedPlane(30, 0.2, 1);
+  angle, setAngle,
+  friction, setFriction,
+  mass, setMass,
+  isRunning, setIsRunning,
+  getBlockPosition,
+  planeData // <--- 1. RÉCUPÉRER planeData ICI
+} = useInclinedPlane(30, 0.2, 1);
 
   const [blockPos, setBlockPos] = useState({ x: 200, y: 200 });
 
@@ -184,7 +185,12 @@ const InclinedPlane = () => {
                  </button>
               </div>
 
-              <InclinedPlaneCanvas ref={canvasRef} blockPosition={blockPos} angle={angle} isFullscreen={isFullscreen} />
+              <InclinedPlaneCanvas 
+  blockPosition={blockPos} 
+  angle={angle} 
+  planeData={planeData} // <--- 2. PASSER planeData ICI
+  isFullscreen={isFullscreen} 
+/>
             </div>
 
             <div className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
