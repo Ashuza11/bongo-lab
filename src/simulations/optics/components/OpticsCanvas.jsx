@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Stage, Layer, Line, Circle, Text, Group, Arrow } from 'react-konva';
+import Mirror from './Mirror';
+
 
 const OpticsCanvas = ({
   incidentAngle,
@@ -75,44 +77,25 @@ const OpticsCanvas = ({
 
   // Dessiner l'interface selon le type de surface
   const drawInterface = () => {
-    switch(surfaceType) {
-      case 'plan':
-        return (
-          <Line
-            points={[0, interfaceY, dimensions.width, interfaceY]}
-            stroke="#64748b"
-            strokeWidth={3}
-            dash={[10, 5]}
-          />
-        );
-      case 'concave':
-        return (
-          <Group>
-            <Line
-              points={[0, interfaceY - 20, centerX - 50, interfaceY - 30, centerX + 50, interfaceY - 30, dimensions.width, interfaceY - 20]}
-              stroke="#64748b"
-              strokeWidth={3}
-              tension={0.5}
-            />
-            <Text x={centerX - 30} y={interfaceY - 60} text="⟁" fontSize={30} fill="#64748b" />
-          </Group>
-        );
-      case 'convexe':
-        return (
-          <Group>
-            <Line
-              points={[0, interfaceY + 20, centerX - 50, interfaceY + 30, centerX + 50, interfaceY + 30, dimensions.width, interfaceY + 20]}
-              stroke="#64748b"
-              strokeWidth={3}
-              tension={0.5}
-            />
-            <Text x={centerX - 30} y={interfaceY + 20} text="⤾" fontSize={30} fill="#64748b" />
-          </Group>
-        );
-      default:
-        return null;
-    }
-  };
+  const interfaceY = dimensions.height / 2;
+  const centerX = dimensions.width / 2;
+  
+  return (
+    <Mirror
+      type={surfaceType}
+      x={centerX}
+      y={interfaceY}
+      width={300}
+      height={200}
+      orientation="horizontal"
+      curvature={80}
+      color="#64748b"
+      showNormal={true}
+      showLabel={true}
+      label={surfaceType === 'plan' ? 'Miroir plan' : surfaceType === 'concave' ? 'Miroir concave' : 'Miroir convexe'}
+    />
+  );
+};
 
   // Dessiner les normales
   const drawNormals = () => {
