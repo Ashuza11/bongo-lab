@@ -1,60 +1,42 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowLeft, Info, Maximize2, Minimize2, Video, StopCircle, AlertCircle, BookOpen } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Info, Maximize2, Minimize2, Video, StopCircle, AlertCircle, BookOpen, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import useInclinedPlane from './hooks/useInclinedPlane';
-import InclinedPlaneCanvas from './components/InclinedPlaneCanvas';
-import InclinedPlaneControls from './components/InclinedPlaneControls';
+import useOptics from './hooks/useOptics';
+import OpticsCanvas from './components/OpticsCanvas';
+import OpticsControls from './components/OpticsControls';
 
-const InclinedPlane = () => {
+const Optics = () => {
   const navigate = useNavigate();
   const containerRef = useRef(null);
-  const canvasRef = useRef(null);
   const [showHelp, setShowHelp] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
-  const animationRef = useRef(null);
-  
+
   const t = {
-    title: "Plan Incliné",
-    description: "Découvre comment l'angle et la friction influencent la vitesse de glissement d'un objet.",
-    editMode: "Ajustez puis cliquez sur Démarrer",
+    title: "Optique - Réflexion & Réfraction",
+    description: "Explore les lois de Snell-Descartes avec des rayons lumineux.",
+    editMode: "Ajuste l'angle et observe",
     recording: "Enregistrement..."
   };
 
   const {
-    angle, setAngle,
-    friction, setFriction,
-    mass, setMass,
+    incidentAngle, setIncidentAngle,
+    n1, setN1,
+    n2, setN2,
+    surfaceType, setSurfaceType,
+    rayType, setRayType,
+    wavelength, setWavelength,
     isRunning, setIsRunning,
-    canSlide,
-    getBlockPosition,
-    resetPosition,
-    planeData
-  } = useInclinedPlane(30, 0.2, 1);
-
-  const [blockPos, setBlockPos] = useState({ x: 150, y: 150 });
-
-  // Animation loop
-  useEffect(() => {
-    const updatePosition = () => {
-      if (getBlockPosition) {
-        const newPos = getBlockPosition();
-        setBlockPos(newPos);
-      }
-      animationRef.current = requestAnimationFrame(updatePosition);
-    };
-    
-    animationRef.current = requestAnimationFrame(updatePosition);
-    
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-    };
-  }, [getBlockPosition]);
+    reflectedAngle,
+    refractedAngle,
+    criticalAngle,
+    totalInternalReflection,
+    getRayColor,
+    predefinedMaterials
+  } = useOptics();
 
   // Timer enregistrement
   useEffect(() => {
@@ -98,7 +80,7 @@ const InclinedPlane = () => {
         const a = document.createElement('a');
         a.href = url;
         const date = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-        a.download = `plan-incline-${date}.webm`;
+        a.download = `optics-${date}.webm`;
         a.click();
         URL.revokeObjectURL(url);
         setIsRecording(false);
@@ -149,6 +131,7 @@ const InclinedPlane = () => {
       <main className="max-w-7xl mx-auto px-4 py-6 mb-20">
         <div className="flex flex-col lg:flex-row gap-8">
           
+          {/* ZONE VISUELLE */}
           <div className="flex-1 space-y-6">
             <div 
               ref={containerRef}
@@ -190,12 +173,18 @@ const InclinedPlane = () => {
                  </button>
               </div>
 
-              <InclinedPlaneCanvas 
-                blockPosition={blockPos} 
-                angle={angle} 
-                planeData={planeData}
-                canSlide={canSlide}
-                isFullscreen={isFullscreen} 
+              <OpticsCanvas 
+                incidentAngle={incidentAngle}
+                reflectedAngle={reflectedAngle}
+                refractedAngle={refractedAngle}
+                surfaceType={surfaceType}
+                rayType={rayType}
+                n1={n1}
+                n2={n2}
+                totalInternalReflection={totalInternalReflection}
+                getRayColor={getRayColor}
+                isRunning={isRunning}
+                isFullscreen={isFullscreen}
               />
             </div>
 
@@ -204,40 +193,43 @@ const InclinedPlane = () => {
                 <BookOpen className="text-blue-500" /> Observation
               </h3>
               <p className="text-slate-600 dark:text-slate-400 leading-relaxed italic text-lg">
-                "{t.description}"
+                "n₁ sin θ₁ = n₂ sin θ₂ — La lumière change de direction en changeant de milieu."
               </p>
             </div>
           </div>
 
-          <aside className="lg:w-96">
-            <div className="lg:sticky lg:top-24">
-              <InclinedPlaneControls
-                angle={angle} onAngleChange={setAngle}
-                friction={friction} onFrictionChange={setFriction}
-                mass={mass} onMassChange={setMass}
-                isRunning={isRunning} 
-                onToggleRunning={() => setIsRunning(!isRunning)}
-                onReset={() => { 
-                  setAngle(30); 
-                  setFriction(0.2); 
-                  setMass(1); 
-                  setIsRunning(false);
-                  if (resetPosition) resetPosition();
-                }}
-                canSlide={canSlide}
-              />
-              
-              <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-2xl text-center">
-                  <p className="text-[10px] font-bold text-blue-400 uppercase">Angle</p>
-                  <p className="text-xl font-black text-blue-700 dark:text-blue-300">{angle}°</p>
-                </div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-2xl text-center">
-                  <p className="text-[10px] font-bold text-purple-400 uppercase">Friction</p>
-                  <p className="text-xl font-black text-purple-700 dark:text-purple-300">{friction.toFixed(2)}</p>
-                </div>
-              </div>
-            </div>
+          {/* ZONE CONTRÔLES */}
+          <aside className="lg:w-96 space-y-6">
+            <OpticsControls
+              incidentAngle={incidentAngle}
+              onIncidentAngleChange={setIncidentAngle}
+              n1={n1}
+              onN1Change={setN1}
+              n2={n2}
+              onN2Change={setN2}
+              surfaceType={surfaceType}
+              onSurfaceTypeChange={setSurfaceType}
+              rayType={rayType}
+              onRayTypeChange={setRayType}
+              wavelength={wavelength}
+              onWavelengthChange={setWavelength}
+              reflectedAngle={reflectedAngle}
+              refractedAngle={refractedAngle}
+              criticalAngle={criticalAngle}
+              totalInternalReflection={totalInternalReflection}
+              predefinedMaterials={predefinedMaterials}
+              isRunning={isRunning}
+              onToggleRunning={() => setIsRunning(!isRunning)}
+              onReset={() => {
+                setIncidentAngle(30);
+                setN1(1.0);
+                setN2(1.5);
+                setSurfaceType('plan');
+                setRayType('both');
+                setWavelength(550);
+                setIsRunning(false);
+              }}
+            />
           </aside>
         </div>
       </main>
@@ -245,4 +237,4 @@ const InclinedPlane = () => {
   );
 };
 
-export default InclinedPlane;
+export default Optics;
