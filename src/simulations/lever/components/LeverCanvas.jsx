@@ -10,6 +10,8 @@ const LeverCanvas = ({
   leverType,
   rotation,
   equilibrium,
+  momentLeft,      
+  momentRight,     
   isRunning,
   isFullscreen
 }) => {
