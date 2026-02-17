@@ -22,7 +22,7 @@ const Pendulum = () => {
 
   // Simulation i18n
   const t = {
-    title: "Pendule Interactif",
+    title: "Pendule Simple",
     description: "Le mouvement d'un pendule dépend de sa longueur et de la gravité. Imagine une balançoire : plus les cordes sont longues, plus le balancement est majestueux et lent.",
     editMode: "Ajustez puis cliquez sur Démarrer",
     recording: "Enregistrement..."

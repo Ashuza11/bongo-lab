@@ -18,7 +18,7 @@ const InclinedPlane = () => {
   const animationRef = useRef(null);
   
   const t = {
-    title: "Plan Incliné Interactif",
+    title: "Plan Incliné",
     description: "Découvre comment l'angle et la friction influencent la vitesse de glissement d'un objet.",
     editMode: "Ajustez puis cliquez sur Démarrer",
     recording: "Enregistrement..."
