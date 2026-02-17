@@ -6,11 +6,11 @@ import translations from '../utils/translations';
 
 /** Lazy-load simulation components for better performance on low-end devices. */
 const simulationComponents = {
-  pendulum: lazy(() => import('../simulations/Pendulum')),
-  'inclined-plane': lazy(() => import('../simulations/InclinedPlane')),
-  circuit: lazy(() => import('../simulations/Circuit')),
-  optics: lazy(() => import('../simulations/Optics')),
-  lever: lazy(() => import('../simulations/Lever')),
+  pendulum: lazy(() => import('../simulations/pendulum')),
+  'inclined-plane': lazy(() => import('../simulations/inclined-plane')), 
+  circuit: lazy(() => import('../simulations/Circuit')), 
+  optics: lazy(() => import('../simulations/Optics')), 
+  lever: lazy(() => import('../simulations/Lever')), 
 };
 
 /**
