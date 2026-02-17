@@ -55,17 +55,18 @@ const useCircuit = () => {
   }, [voltage, resistance, components, circuitType]);
 
   return {
-    components,
-    addComponent,
-    removeComponent,
-    updateComponent,
-    voltage, setVoltage,
-    resistance, setResistance,
-    current,
-    isRunning, setIsRunning,
-    circuitType, setCircuitType,
-    calculateCurrent
-  };
+  components,
+  setComponents, 
+  addComponent,
+  removeComponent,
+  updateComponent,
+  voltage, setVoltage,
+  resistance, setResistance,
+  current,
+  isRunning, setIsRunning,
+  circuitType, setCircuitType,
+  calculateCurrent
+};
 };
 
 export default useCircuit;
