@@ -216,19 +216,19 @@ const LeverCanvas = ({
 
           {/* Valeurs des moments */}
           <Text
-            x={pivotX - 200}
-            y={pivotY - 150}
-            text={`M gauche: ${momentLeft.toFixed(1)} Nm`}
-            fontSize={12}
-            fill="#ef4444"
-          />
+  x={pivotX - 200}
+  y={pivotY - 150}
+  text={`M gauche: ${momentLeft?.toFixed(1) || '0.0'} Nm`}
+  fontSize={12}
+  fill="#ef4444"
+/>
           <Text
-            x={pivotX + 50}
-            y={pivotY - 150}
-            text={`M droite: ${momentRight.toFixed(1)} Nm`}
-            fontSize={12}
-            fill="#3b82f6"
-          />
+  x={pivotX + 50}
+  y={pivotY - 150}
+  text={`M droite: ${momentRight?.toFixed(1) || '0.0'} Nm`}
+  fontSize={12}
+  fill="#3b82f6"
+/>
         </Layer>
       </Stage>
     </div>
