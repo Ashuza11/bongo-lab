@@ -71,6 +71,18 @@ const translations = {
     mirrorType: "Type de miroir",
     lensType: "Type de lentille"
   }
+},
+lever: {
+  title: "Levier Mécanique",
+  description: "Découvre le principe des moments de force avec une balance.",
+  subject: "Mécanique",
+  controls: {
+    massLeft: "Masse gauche (kg)",
+    massRight: "Masse droite (kg)",
+    distanceLeft: "Distance gauche (m)",
+    distanceRight: "Distance droite (m)",
+    equilibrium: "Équilibre"
+  }
 }
 };
 
