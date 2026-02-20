@@ -114,8 +114,8 @@ const Lever = () => {
                         <button
                             onClick={isRecording ? stopRecording : startRecording}
                             className={`p-2 rounded-full transition-all ${isRecording
-                                    ? 'bg-red-500 text-white animate-pulse'
-                                    : 'hover:bg-slate-100 dark:hover:bg-slate-800'
+                                ? 'bg-red-500 text-white animate-pulse'
+                                : 'hover:bg-slate-100 dark:hover:bg-slate-800'
                                 }`}
                         >
                             {isRecording ? <StopCircle size={22} /> : <Video size={22} />}
@@ -156,8 +156,8 @@ const Lever = () => {
                                 <button
                                     onClick={isRecording ? stopRecording : startRecording}
                                     className={`p-4 rounded-2xl shadow-xl active:scale-90 transition-transform ${isRecording
-                                            ? 'bg-red-500 text-white animate-pulse'
-                                            : 'bg-slate-900/90 dark:bg-white/90 text-white dark:text-slate-900'
+                                        ? 'bg-red-500 text-white animate-pulse'
+                                        : 'bg-slate-900/90 dark:bg-white/90 text-white dark:text-slate-900'
                                         }`}
                                 >
                                     {isRecording ? <StopCircle size={22} /> : <Video size={22} />}
@@ -170,7 +170,7 @@ const Lever = () => {
                                 </button>
                             </div>
 
-                                          <LeverCanvas
+                            <LeverCanvas
                                 massLeft={massLeft}
                                 massRight={massRight}
                                 distanceLeft={distanceLeft}
@@ -178,11 +178,12 @@ const Lever = () => {
                                 leverType={leverType}
                                 rotation={rotation}
                                 equilibrium={equilibrium}
-                                momentLeft={momentLeft}     
-                                momentRight={momentRight}    
+                                momentLeft={momentLeft}  
+                                momentRight={momentRight}
                                 isRunning={isRunning}
                                 isFullscreen={isFullscreen}
-                            />          </div>
+                            />
+                        </div>
 
                         <div className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
                             <h3 className="flex items-center gap-2 font-bold text-xl mb-3">
