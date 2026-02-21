@@ -34,7 +34,7 @@ const SplashScreen = ({ onFinished }) => {
       {/* App name */}
       <h1 className="relative z-10 text-3xl sm:text-4xl font-bold tracking-wide mb-2"
           style={{ color: '#1B4F72' }}>
-        Bongo-Lab
+        BongoLab
       </h1>
 
       {/* Taglines */}

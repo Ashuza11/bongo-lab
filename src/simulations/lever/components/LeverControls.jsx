@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Pause, RotateCcw, Scale, Weight, Move, GitBranch } from 'lucide-react';
+import { Play, Pause, RotateCcw, Weight, Move, GitBranch } from 'lucide-react';
 
 const LeverControls = ({
   massLeft, onMassLeftChange,
@@ -14,28 +14,38 @@ const LeverControls = ({
   onReset
 }) => {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl p-6 border border-slate-100 dark:border-slate-800 space-y-6">
+    <div className="rounded-[2rem] shadow-xl p-6 space-y-6"
+      style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+
+      {/* Start / Pause */}
       <button
         onClick={onToggleRunning}
-        className={`w-full py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg ${
-          isRunning 
-          ? 'bg-amber-100 text-amber-600 border-2 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400' 
-          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-        }`}
+        className="w-full py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg"
+        style={{
+          background: isRunning ? 'var(--btn-pause-bg)' : 'var(--btn-success-bg)',
+          color: isRunning ? 'var(--btn-pause-text)' : 'var(--btn-success-text)',
+          border: isRunning ? '1.5px solid var(--btn-pause-border)' : 'none',
+        }}
       >
         {isRunning ? <><Pause size={24} /> PAUSE</> : <><Play size={24} /> DÉMARRER</>}
       </button>
 
       <div className="space-y-4">
-        {/* Type de levier */}
+        {/* Lever type */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
-            <GitBranch size={16} /> Type de levier
+          <label className="flex items-center gap-2 text-sm font-bold mb-2"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <GitBranch size={16} style={{ color: 'var(--color-primary)' }} /> Type de levier
           </label>
           <select
             value={leverType}
             onChange={(e) => onLeverTypeChange(e.target.value)}
-            className="w-full p-2 bg-slate-50 dark:bg-slate-800 rounded-lg"
+            className="w-full p-2 rounded-lg"
+            style={{
+              background: 'var(--color-surface-raised)',
+              border: '1px solid var(--color-border)',
+              color: 'var(--color-text-primary)',
+            }}
           >
             <option value="inter-appui">Balançoire (inter-appui)</option>
             <option value="inter-resistant">Brouette (inter-résistant)</option>
@@ -46,8 +56,9 @@ const LeverControls = ({
         {/* Masses */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="flex items-center gap-1 text-sm font-bold text-slate-500 mb-2">
-              <Weight size={14} className="text-red-500" /> Masse G (kg)
+            <label className="flex items-center gap-1 text-sm font-bold mb-2"
+              style={{ color: 'var(--color-text-secondary)' }}>
+              <Weight size={14} style={{ color: 'var(--color-primary)' }} /> Masse G (kg)
             </label>
             <input
               type="range"
@@ -56,13 +67,17 @@ const LeverControls = ({
               step="0.5"
               value={massLeft}
               onChange={(e) => onMassLeftChange(Number(e.target.value))}
-              className="w-full accent-red-500"
+              className="w-full"
+              style={{ accentColor: 'var(--color-primary)' }}
             />
-            <div className="text-right text-sm font-bold text-red-500">{massLeft} kg</div>
+            <div className="text-right text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
+              {massLeft} kg
+            </div>
           </div>
           <div>
-            <label className="flex items-center gap-1 text-sm font-bold text-slate-500 mb-2">
-              <Weight size={14} className="text-blue-500" /> Masse D (kg)
+            <label className="flex items-center gap-1 text-sm font-bold mb-2"
+              style={{ color: 'var(--color-text-secondary)' }}>
+              <Weight size={14} style={{ color: 'var(--color-secondary)' }} /> Masse D (kg)
             </label>
             <input
               type="range"
@@ -71,17 +86,21 @@ const LeverControls = ({
               step="0.5"
               value={massRight}
               onChange={(e) => onMassRightChange(Number(e.target.value))}
-              className="w-full accent-blue-500"
+              className="w-full"
+              style={{ accentColor: 'var(--color-secondary)' }}
             />
-            <div className="text-right text-sm font-bold text-blue-500">{massRight} kg</div>
+            <div className="text-right text-sm font-bold" style={{ color: 'var(--color-secondary)' }}>
+              {massRight} kg
+            </div>
           </div>
         </div>
 
         {/* Distances */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="flex items-center gap-1 text-sm font-bold text-slate-500 mb-2">
-              <Move size={14} className="text-red-500" /> Distance G (m)
+            <label className="flex items-center gap-1 text-sm font-bold mb-2"
+              style={{ color: 'var(--color-text-secondary)' }}>
+              <Move size={14} style={{ color: 'var(--color-primary)' }} /> Distance G (m)
             </label>
             <input
               type="range"
@@ -90,13 +109,17 @@ const LeverControls = ({
               step="0.1"
               value={distanceLeft}
               onChange={(e) => onDistanceLeftChange(Number(e.target.value))}
-              className="w-full accent-red-500"
+              className="w-full"
+              style={{ accentColor: 'var(--color-primary)' }}
             />
-            <div className="text-right text-sm font-bold text-red-500">{distanceLeft} m</div>
+            <div className="text-right text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
+              {distanceLeft} m
+            </div>
           </div>
           <div>
-            <label className="flex items-center gap-1 text-sm font-bold text-slate-500 mb-2">
-              <Move size={14} className="text-blue-500" /> Distance D (m)
+            <label className="flex items-center gap-1 text-sm font-bold mb-2"
+              style={{ color: 'var(--color-text-secondary)' }}>
+              <Move size={14} style={{ color: 'var(--color-secondary)' }} /> Distance D (m)
             </label>
             <input
               type="range"
@@ -105,43 +128,59 @@ const LeverControls = ({
               step="0.1"
               value={distanceRight}
               onChange={(e) => onDistanceRightChange(Number(e.target.value))}
-              className="w-full accent-blue-500"
+              className="w-full"
+              style={{ accentColor: 'var(--color-secondary)' }}
             />
-            <div className="text-right text-sm font-bold text-blue-500">{distanceRight} m</div>
+            <div className="text-right text-sm font-bold" style={{ color: 'var(--color-secondary)' }}>
+              {distanceRight} m
+            </div>
           </div>
         </div>
 
-        {/* Résultats des moments */}
-        <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl space-y-3">
+        {/* Moments results */}
+        <div className="p-4 rounded-xl space-y-3"
+          style={{ background: 'var(--color-surface-raised)', border: '1px solid var(--color-border-soft)' }}>
           <div className="flex justify-between items-center">
-            <span className="text-sm">Moment gauche:</span>
-            <span className="font-bold text-red-500">{momentLeft.toFixed(1)} Nm</span>
+            <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Moment gauche:</span>
+            <span className="font-bold" style={{ color: 'var(--color-primary)' }}>
+              {momentLeft.toFixed(1)} Nm
+            </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-sm">Moment droit:</span>
-            <span className="font-bold text-blue-500">{momentRight.toFixed(1)} Nm</span>
+            <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Moment droit:</span>
+            <span className="font-bold" style={{ color: 'var(--color-secondary)' }}>
+              {momentRight.toFixed(1)} Nm
+            </span>
           </div>
-          <div className="border-t border-slate-200 dark:border-slate-700 my-2" />
+          <div style={{ borderTop: '1px solid var(--color-divider)', marginTop: '0.5rem', paddingTop: '0.5rem' }} />
           <div className="flex justify-between items-center">
-            <span className="text-sm font-bold">État:</span>
-            <span className={`font-bold ${equilibrium ? 'text-green-500' : 'text-amber-500'}`}>
+            <span className="text-sm font-bold" style={{ color: 'var(--color-text-primary)' }}>État:</span>
+            <span className="font-bold"
+              style={{ color: equilibrium ? 'var(--color-success)' : 'var(--color-warning)' }}>
               {equilibrium ? '⚖️ Équilibre' : '⚠️ Déséquilibre'}
             </span>
           </div>
         </div>
 
-        {/* Ratio idéal */}
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl text-center">
-          <p className="text-xs font-bold text-blue-400 uppercase">Loi des leviers</p>
-          <p className="text-sm text-blue-700 dark:text-blue-300">
+        {/* Formula */}
+        <div className="p-3 rounded-xl text-center"
+          style={{ background: 'var(--color-primary-bg)', border: '1px solid var(--color-border-soft)' }}>
+          <p className="text-xs font-bold uppercase mb-1" style={{ color: 'var(--color-primary)' }}>
+            Loi des leviers
+          </p>
+          <p className="text-sm font-semibold" style={{ color: 'var(--color-earth-brown)' }}>
             m₁ × d₁ = m₂ × d₂
           </p>
         </div>
       </div>
 
+      {/* Reset */}
       <button
         onClick={onReset}
-        className="w-full py-2 text-slate-400 font-bold flex items-center justify-center gap-2 hover:text-slate-600 transition-colors"
+        className="w-full py-2 font-bold flex items-center justify-center gap-2 transition-colors rounded-xl"
+        style={{ color: 'var(--btn-ghost-text)' }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--btn-ghost-bg-hover)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
       >
         <RotateCcw size={18} /> RÉINITIALISER
       </button>

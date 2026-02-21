@@ -17,23 +17,28 @@ const OpticsControls = ({
   onReset
 }) => {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl p-6 border border-slate-100 dark:border-slate-800 space-y-6">
+    <div className="rounded-[2rem] shadow-xl p-6 space-y-6"
+      style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+
+      {/* Start / Pause */}
       <button
         onClick={onToggleRunning}
-        className={`w-full py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg ${
-          isRunning 
-          ? 'bg-amber-100 text-amber-600 border-2 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400' 
-          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-        }`}
+        className="w-full py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg"
+        style={{
+          background: isRunning ? 'var(--btn-pause-bg)' : 'var(--btn-success-bg)',
+          color: isRunning ? 'var(--btn-pause-text)' : 'var(--btn-success-text)',
+          border: isRunning ? '1.5px solid var(--btn-pause-border)' : 'none',
+        }}
       >
         {isRunning ? <><Pause size={24} /> PAUSE</> : <><Play size={24} /> DÉMARRER</>}
       </button>
 
       <div className="space-y-4">
-        {/* Angle d'incidence */}
+        {/* Incident angle */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
-            <Eye size={16} /> Angle d'incidence
+          <label className="flex items-center gap-2 text-sm font-bold mb-2"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <Eye size={16} style={{ color: 'var(--color-primary)' }} /> Angle d'incidence
           </label>
           <input
             type="range"
@@ -41,24 +46,32 @@ const OpticsControls = ({
             max="90"
             value={incidentAngle}
             onChange={(e) => onIncidentAngleChange(Number(e.target.value))}
-            className="w-full accent-blue-600"
+            className="w-full"
+            style={{ accentColor: 'var(--slider-primary)' }}
           />
           <div className="flex justify-between text-sm">
-            <span className="text-blue-600 font-bold">{incidentAngle}°</span>
+            <span className="font-bold" style={{ color: 'var(--color-primary)' }}>{incidentAngle}°</span>
             {criticalAngle && (
-              <span className="text-amber-600">Angle critique: {criticalAngle.toFixed(1)}°</span>
+              <span style={{ color: 'var(--color-accent-dark)' }}>
+                Angle critique: {criticalAngle.toFixed(1)}°
+              </span>
             )}
           </div>
         </div>
 
-        {/* Indices de réfraction */}
+        {/* Refractive indices */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-bold text-slate-500">Milieu 1 (n₁)</label>
+            <label className="text-xs font-bold" style={{ color: 'var(--color-text-muted)' }}>Milieu 1 (n₁)</label>
             <select
               value={n1}
               onChange={(e) => onN1Change(Number(e.target.value))}
-              className="w-full p-2 bg-slate-50 dark:bg-slate-800 rounded-lg mt-1"
+              className="w-full p-2 rounded-lg mt-1"
+              style={{
+                background: 'var(--color-surface-raised)',
+                border: '1px solid var(--color-border)',
+                color: 'var(--color-text-primary)',
+              }}
             >
               <option value={1.0}>Air (1.0)</option>
               <option value={1.33}>Eau (1.33)</option>
@@ -67,11 +80,16 @@ const OpticsControls = ({
             </select>
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500">Milieu 2 (n₂)</label>
+            <label className="text-xs font-bold" style={{ color: 'var(--color-text-muted)' }}>Milieu 2 (n₂)</label>
             <select
               value={n2}
               onChange={(e) => onN2Change(Number(e.target.value))}
-              className="w-full p-2 bg-slate-50 dark:bg-slate-800 rounded-lg mt-1"
+              className="w-full p-2 rounded-lg mt-1"
+              style={{
+                background: 'var(--color-surface-raised)',
+                border: '1px solid var(--color-border)',
+                color: 'var(--color-text-primary)',
+              }}
             >
               <option value={1.0}>Air (1.0)</option>
               <option value={1.33}>Eau (1.33)</option>
@@ -81,21 +99,23 @@ const OpticsControls = ({
           </div>
         </div>
 
-        {/* Type de surface */}
+        {/* Surface type */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
-            <GitBranch size={16} /> Type de surface
+          <label className="flex items-center gap-2 text-sm font-bold mb-2"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <GitBranch size={16} style={{ color: 'var(--color-primary)' }} /> Type de surface
           </label>
           <div className="flex gap-2">
             {['plan', 'concave', 'convexe'].map(type => (
               <button
                 key={type}
                 onClick={() => onSurfaceTypeChange(type)}
-                className={`flex-1 py-2 rounded-lg font-bold capitalize transition-all ${
-                  surfaceType === type
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
+                className="flex-1 py-2 rounded-lg font-bold capitalize transition-all"
+                style={{
+                  background: surfaceType === type ? 'var(--btn-primary-bg)' : 'var(--color-surface-raised)',
+                  color: surfaceType === type ? 'var(--btn-primary-text)' : 'var(--color-text-secondary)',
+                  border: '1px solid var(--color-border)',
+                }}
               >
                 {type}
               </button>
@@ -103,10 +123,11 @@ const OpticsControls = ({
           </div>
         </div>
 
-        {/* Type de rayon */}
+        {/* Ray type */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
-            <Waves size={16} /> Affichage
+          <label className="flex items-center gap-2 text-sm font-bold mb-2"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <Waves size={16} style={{ color: 'var(--color-secondary)' }} /> Affichage
           </label>
           <div className="flex gap-2">
             {[
@@ -117,11 +138,12 @@ const OpticsControls = ({
               <button
                 key={type.value}
                 onClick={() => onRayTypeChange(type.value)}
-                className={`flex-1 py-2 rounded-lg font-bold text-xs transition-all ${
-                  rayType === type.value
-                    ? 'bg-purple-500 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
+                className="flex-1 py-2 rounded-lg font-bold text-xs transition-all"
+                style={{
+                  background: rayType === type.value ? 'var(--btn-success-bg)' : 'var(--color-surface-raised)',
+                  color: rayType === type.value ? 'var(--btn-success-text)' : 'var(--color-text-secondary)',
+                  border: '1px solid var(--color-border)',
+                }}
               >
                 {type.label}
               </button>
@@ -129,9 +151,10 @@ const OpticsControls = ({
           </div>
         </div>
 
-        {/* Longueur d'onde (couleur) */}
+        {/* Wavelength / color */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-bold text-slate-500 mb-2">
+          <label className="flex items-center gap-2 text-sm font-bold mb-2"
+            style={{ color: 'var(--color-text-secondary)' }}>
             <div className="w-4 h-4 rounded-full bg-gradient-to-r from-violet-500 to-red-500" /> Couleur
           </label>
           <input
@@ -140,29 +163,37 @@ const OpticsControls = ({
             max="700"
             value={wavelength}
             onChange={(e) => onWavelengthChange(Number(e.target.value))}
-            className="w-full accent-purple-600"
+            className="w-full"
+            style={{ accentColor: 'var(--color-primary)' }}
           />
-          <div className="text-right text-sm font-bold text-purple-600">{wavelength} nm</div>
+          <div className="text-right text-sm font-bold" style={{ color: 'var(--color-primary)' }}>
+            {wavelength} nm
+          </div>
         </div>
 
-        {/* Résultats */}
-        <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl space-y-2">
+        {/* Results */}
+        <div className="p-4 rounded-xl space-y-2"
+          style={{ background: 'var(--color-surface-raised)', border: '1px solid var(--color-border-soft)' }}>
           <div className="flex justify-between">
-            <span className="text-sm">Angle réfléchi:</span>
-            <span className="font-bold text-green-600">{reflectedAngle}°</span>
+            <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Angle réfléchi:</span>
+            <span className="font-bold" style={{ color: 'var(--color-secondary)' }}>{reflectedAngle}°</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm">Angle réfracté:</span>
-            <span className="font-bold text-blue-600">
+            <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>Angle réfracté:</span>
+            <span className="font-bold" style={{ color: 'var(--color-primary)' }}>
               {totalInternalReflection ? '⚠️ Réflexion totale' : (refractedAngle?.toFixed(1) + '°' || 'N/A')}
             </span>
           </div>
         </div>
       </div>
 
+      {/* Reset */}
       <button
         onClick={onReset}
-        className="w-full py-2 text-slate-400 font-bold flex items-center justify-center gap-2 hover:text-slate-600 transition-colors"
+        className="w-full py-2 font-bold flex items-center justify-center gap-2 transition-colors rounded-xl"
+        style={{ color: 'var(--btn-ghost-text)' }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--btn-ghost-bg-hover)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
       >
         <RotateCcw size={18} /> RÉINITIALISER
       </button>

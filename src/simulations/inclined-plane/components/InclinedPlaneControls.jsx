@@ -1,98 +1,112 @@
 import React from 'react';
 import { Play, Pause, RotateCcw, Gauge, Wind } from 'lucide-react';
 
-const InclinedPlaneControls = ({ 
-  angle, onAngleChange, 
-  friction, onFrictionChange, 
-  mass, onMassChange, 
-  isRunning, onToggleRunning, 
+const InclinedPlaneControls = ({
+  angle, onAngleChange,
+  friction, onFrictionChange,
+  mass, onMassChange,
+  isRunning, onToggleRunning,
   onReset,
-  canSlide 
+  canSlide
 }) => {
-  
+
   const handleEdit = (setter, val) => {
     if (isRunning) onToggleRunning();
     setter(val);
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl p-6 border border-slate-100 dark:border-slate-800 space-y-8">
+    <div className="rounded-[2.5rem] shadow-xl p-6 space-y-8"
+      style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+
+      {/* Start / Pause */}
       <button
         onClick={onToggleRunning}
-        className={`w-full py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg ${
-          isRunning 
-          ? 'bg-amber-100 text-amber-600 border-2 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400' 
-          : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-200 dark:bg-emerald-700'
-        }`}
+        className="w-full py-6 rounded-3xl font-black text-xl flex items-center justify-center gap-3 transition-all active:scale-95 shadow-lg"
+        style={{
+          background: isRunning ? 'var(--btn-pause-bg)' : 'var(--btn-success-bg)',
+          color: isRunning ? 'var(--btn-pause-text)' : 'var(--btn-success-text)',
+          border: isRunning ? '1.5px solid var(--btn-pause-border)' : 'none',
+        }}
       >
         {isRunning ? <><Pause size={28} /> PAUSE</> : <><Play size={28} /> DÉMARRER</>}
       </button>
 
       <div className="space-y-6">
+        {/* Angle */}
         <div className="space-y-4">
-          <div className="flex justify-between font-bold text-slate-500 uppercase text-xs tracking-widest dark:text-slate-400">
-            <span className="flex items-center gap-2"><Gauge size={16}/> Inclinaison</span>
-            <span className="text-blue-600 dark:text-blue-400 text-lg">{angle}°</span>
+          <div className="flex justify-between font-bold uppercase text-xs tracking-widest"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <span className="flex items-center gap-2">
+              <Gauge size={16} style={{ color: 'var(--color-primary)' }} /> Inclinaison
+            </span>
+            <span className="text-lg" style={{ color: 'var(--color-primary)' }}>{angle}°</span>
           </div>
-          <input 
-            type="range" 
-            min="0" 
-            max="360" 
-            value={angle} 
-            onChange={(e) => handleEdit(onAngleChange, Number(e.target.value))} 
-            className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500" 
+          <input
+            type="range"
+            min="0"
+            max="360"
+            value={angle}
+            onChange={(e) => handleEdit(onAngleChange, Number(e.target.value))}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            style={{ accentColor: 'var(--slider-primary)' }}
           />
-          <div className="flex justify-between text-xs text-slate-400">
-            <span>0°</span>
-            <span>90°</span>
-            <span>180°</span>
-            <span>270°</span>
-            <span>360°</span>
-          </div>
-          
-        </div>
-
-        <div className="space-y-4">
-          <div className="flex justify-between font-bold text-slate-500 uppercase text-xs tracking-widest dark:text-slate-400">
-            <span className="flex items-center gap-2"><Wind size={16}/> Friction</span>
-            <span className="text-amber-600 dark:text-amber-400 text-lg">{friction.toFixed(2)}</span>
-          </div>
-          <input 
-            type="range" 
-            min="0.01" 
-            max="0.9" 
-            step="0.01" 
-            value={friction} 
-            onChange={(e) => handleEdit(onFrictionChange, Number(e.target.value))} 
-            className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-amber-500 dark:accent-amber-400" 
-          />
-          <div className="flex justify-between text-xs text-slate-400">
-            <span>Glace</span>
-            <span>Bois</span>
-            <span>Caoutchouc</span>
+          <div className="flex justify-between text-xs" style={{ color: 'var(--color-text-muted)' }}>
+            <span>0°</span><span>90°</span><span>180°</span><span>270°</span><span>360°</span>
           </div>
         </div>
 
+        {/* Friction */}
         <div className="space-y-4">
-          <div className="flex justify-between font-bold text-slate-500 uppercase text-xs tracking-widest dark:text-slate-400">
+          <div className="flex justify-between font-bold uppercase text-xs tracking-widest"
+            style={{ color: 'var(--color-text-secondary)' }}>
+            <span className="flex items-center gap-2">
+              <Wind size={16} style={{ color: 'var(--color-accent-dark)' }} /> Friction
+            </span>
+            <span className="text-lg" style={{ color: 'var(--color-accent-dark)' }}>{friction.toFixed(2)}</span>
+          </div>
+          <input
+            type="range"
+            min="0.01"
+            max="0.9"
+            step="0.01"
+            value={friction}
+            onChange={(e) => handleEdit(onFrictionChange, Number(e.target.value))}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            style={{ accentColor: 'var(--slider-accent)' }}
+          />
+          <div className="flex justify-between text-xs" style={{ color: 'var(--color-text-muted)' }}>
+            <span>Glace</span><span>Bois</span><span>Caoutchouc</span>
+          </div>
+        </div>
+
+        {/* Mass */}
+        <div className="space-y-4">
+          <div className="flex justify-between font-bold uppercase text-xs tracking-widest"
+            style={{ color: 'var(--color-text-secondary)' }}>
             <span className="flex items-center gap-2">⚖️ Masse</span>
-            <span className="text-purple-600 dark:text-purple-400 text-lg">{mass.toFixed(1)} kg</span>
+            <span className="text-lg" style={{ color: 'var(--color-secondary)' }}>{mass.toFixed(1)} kg</span>
           </div>
-          <input 
-            type="range" 
-            min="0.5" 
-            max="5" 
-            step="0.1" 
-            value={mass} 
-            onChange={(e) => handleEdit(onMassChange, Number(e.target.value))} 
-            className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-purple-600 dark:accent-purple-500" 
+          <input
+            type="range"
+            min="0.5"
+            max="5"
+            step="0.1"
+            value={mass}
+            onChange={(e) => handleEdit(onMassChange, Number(e.target.value))}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer"
+            style={{ accentColor: 'var(--slider-secondary)' }}
           />
         </div>
       </div>
 
-      <button 
-        onClick={onReset} 
-        className="w-full py-2 text-slate-400 font-bold flex items-center justify-center gap-2 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
+      {/* Reset */}
+      <button
+        onClick={onReset}
+        className="w-full py-2 font-bold flex items-center justify-center gap-2 transition-colors rounded-xl"
+        style={{ color: 'var(--btn-ghost-text)' }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--btn-ghost-bg-hover)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
       >
         <RotateCcw size={18} /> RÉINITIALISER
       </button>

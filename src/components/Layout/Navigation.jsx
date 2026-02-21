@@ -34,7 +34,7 @@ const Navigation = ({ open, onClose }) => {
           />
           <div>
             <h2 className="text-base font-bold" style={{ color: '#1B4F72' }}>
-              Bongo-Lab
+              BongoLab
             </h2>
             <p className="text-xs" style={{ color: '#8B7355' }}>Menu</p>
           </div>
@@ -42,17 +42,20 @@ const Navigation = ({ open, onClose }) => {
 
         {/* Nav items */}
         <div className="flex-1 px-3 py-4 flex flex-col gap-1">
-          {navItems.map(({ to, icon: Icon, label }) => (
-            <Link
-              key={label}
-              to={to}
-              onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#5D3A1A] hover:bg-[#FFF3E0] active:bg-[#FFE0B2] transition-colors font-medium text-sm"
-            >
-              <Icon size={20} style={{ color: '#C2703E' }} />
-              {label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const NavIcon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                to={item.to}
+                onClick={onClose}
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#5D3A1A] hover:bg-[#FFF3E0] active:bg-[#FFE0B2] transition-colors font-medium text-sm"
+              >
+                <NavIcon size={20} style={{ color: '#C2703E' }} />
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Drawer footer */}

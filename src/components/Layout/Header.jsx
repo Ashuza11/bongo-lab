@@ -18,7 +18,7 @@ const Header = ({ menuOpen, onToggleMenu }) => {
           className="text-lg font-bold tracking-wide"
           style={{ color: '#1B4F72' }}
         >
-          Bongo-Lab
+          BongoLab
         </h1>
       </div>
       <button

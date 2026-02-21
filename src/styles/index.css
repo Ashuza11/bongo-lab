@@ -1,30 +1,100 @@
 @import "tailwindcss";
 
 :root {
-  /* African warm palette */
-  --color-terracotta: #C2703E;
-  --color-terracotta-dark: #A85A2A;
-  --color-olive: #7A8B3C;
-  --color-olive-soft: #8FA04E;
-  --color-golden: #E8C547;
-  --color-golden-sand: #F2D974;
-  --color-deep-blue: #1B4F72;
-  --color-deep-blue-light: #2471A3;
-  --color-off-white: #FDF8F0;
-  --color-warm-white: #FFF9F0;
+  /* ─── BongoLab Design Tokens ─────────────────────────────────────────────── */
+
+  /* Brand / Primary — Terracotta */
+  --color-primary: #C2703E;
+  --color-primary-dark: #A85A2A;
+  --color-primary-light: #E8926A;
+  --color-primary-bg: #FDEBD0;      /* tinted card / section bg */
+  --color-primary-bg-soft: #FDF0E6; /* very soft tint */
+
+  /* Secondary — Olive green */
+  --color-secondary: #7A8B3C;
+  --color-secondary-dark: #5C6A2A;
+  --color-secondary-light: #A0B050;
+  --color-secondary-bg: #EDF2D8;
+
+  /* Accent — Golden */
+  --color-accent: #E8C547;
+  --color-accent-dark: #C9A830;
+  --color-accent-light: #F2D974;
+  --color-accent-bg: #FEF9E0;
+
+  /* Deep Blue — info / action secondary */
+  --color-info: #1B4F72;
+  --color-info-light: #2471A3;
+  --color-info-bg: #D6EAF8;
+
+  /* Earth tones — text & borders */
+  --color-text-primary: #2C1810;
+  --color-text-secondary: #8B7355;
+  --color-text-muted: #A89478;
   --color-earth-brown: #5D3A1A;
   --color-earth-brown-light: #8B5E3C;
 
-  /* Simulation-specific */
+  /* Surfaces */
+  --color-off-white: #FDF8F0;
+  --color-warm-white: #FFF9F0;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FDF8F0;
+  --color-border: #E8DFD0;
+  --color-border-soft: #F0E8D8;
+  --color-divider: #EDE0CC;
+
+  /* State — functional */
+  --color-danger: #CE1126;
+  --color-danger-bg: #FDECEA;
+  --color-success: #2D6A4F;
+  --color-success-bg: #E8F5EE;
+  --color-warning: #C9A830;
+  --color-warning-bg: #FEF9E0;
+
+  /* Simulation-specific accent colours (kept for canvas drawing) */
   --color-pendulum: #D4792C;
   --color-inclined: #D4A017;
   --color-circuit-green: #6B9E3C;
   --color-refraction-blue: #1A3A5C;
   --color-lever-sand: #C9A84C;
 
-  /* Functional */
-  --color-danger: #CE1126;
-  --color-success: #2D6A4F;
+  /* ─── Button tokens ──────────────────────────────────────────────────────── */
+  /* Primary button  */
+  --btn-primary-bg: #C2703E;
+  --btn-primary-bg-hover: #A85A2A;
+  --btn-primary-text: #FFFFFF;
+
+  /* Secondary / outline button */
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-border: #C2703E;
+  --btn-secondary-text: #C2703E;
+
+  /* Success / start button */
+  --btn-success-bg: #7A8B3C;
+  --btn-success-bg-hover: #5C6A2A;
+  --btn-success-text: #FFFFFF;
+
+  /* Pause / warning button */
+  --btn-pause-bg: #FEF9E0;
+  --btn-pause-border: #C9A830;
+  --btn-pause-text: #7A5C0A;
+
+  /* Ghost / reset button */
+  --btn-ghost-text: #8B7355;
+  --btn-ghost-bg-hover: #F0E8D8;
+
+  /* Danger / stop button */
+  --btn-danger-bg: #CE1126;
+  --btn-danger-text: #FFFFFF;
+
+  /* Fullscreen / overlay dark button */
+  --btn-overlay-bg: rgba(93, 58, 26, 0.85);
+  --btn-overlay-text: #FFFFFF;
+
+  /* ─── Slider accent ──────────────────────────────────────────────────────── */
+  --slider-primary: #C2703E;
+  --slider-secondary: #7A8B3C;
+  --slider-accent: #E8C547;
 }
 
 * {
@@ -73,7 +143,7 @@ body {
   background-image:
     linear-gradient(90deg, var(--color-deep-blue) 1px, transparent 1px),
     linear-gradient(0deg, var(--color-deep-blue) 1px, transparent 1px),
-    radial-gradient(circle 3px, var(--color-deep-blue) 1.5px, transparent 1.5px);
+    radial-gradient(circle, var(--color-deep-blue) 1.5px, transparent 2px);
   background-size: 40px 40px, 40px 40px, 40px 40px;
   background-position: 0 0, 0 0, 20px 20px;
 }

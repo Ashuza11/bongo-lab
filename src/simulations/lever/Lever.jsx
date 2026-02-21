@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Info, Maximize2, Minimize2, Video, StopCircle, AlertCircle, BookOpen, Scale } from 'lucide-react';
+import { ArrowLeft, Info, Maximize2, Minimize2, Video, StopCircle, AlertCircle, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useLever from './hooks/useLever';
 import LeverCanvas from './components/LeverCanvas';
@@ -38,7 +38,6 @@ const Lever = () => {
         reset
     } = useLever();
 
-    // Timer enregistrement
     useEffect(() => {
         if (isRecording) {
             timerRef.current = setInterval(() => {
@@ -103,50 +102,72 @@ const Lever = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#fcfcfd] dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-            <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b sticky top-0 z-30">
-                <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                    <button onClick={() => navigate('/')} className="p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
+        <div className="min-h-screen" style={{ background: 'var(--color-off-white)', color: 'var(--color-text-primary)' }}>
+            {/* Header */}
+            <header className="sticky top-0 z-30 backdrop-blur-md border-b"
+                style={{ background: 'rgba(253,248,240,0.95)', borderColor: 'var(--color-border)' }}>
+                <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
+                    <button
+                        onClick={() => navigate('/')}
+                        className="p-2 -ml-2 rounded-full transition-colors"
+                        style={{ color: 'var(--color-earth-brown)' }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'var(--color-primary-bg)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                    >
                         <ArrowLeft size={24} />
                     </button>
-                    <span className="font-bold tracking-tight text-lg">{t.title}</span>
+                    <span className="font-bold tracking-tight text-base" style={{ color: 'var(--color-text-primary)' }}>
+                        {t.title}
+                    </span>
                     <div className="flex items-center gap-2">
                         <button
                             onClick={isRecording ? stopRecording : startRecording}
-                            className={`p-2 rounded-full transition-all ${isRecording
-                                ? 'bg-red-500 text-white animate-pulse'
-                                : 'hover:bg-slate-100 dark:hover:bg-slate-800'
-                                }`}
+                            className="p-2 rounded-full transition-all"
+                            style={isRecording
+                                ? { background: 'var(--color-danger)', color: '#fff' }
+                                : { color: 'var(--color-earth-brown)' }}
+                            onMouseEnter={e => { if (!isRecording) e.currentTarget.style.background = 'var(--color-primary-bg)'; }}
+                            onMouseLeave={e => { if (!isRecording) e.currentTarget.style.background = 'transparent'; }}
                         >
                             {isRecording ? <StopCircle size={22} /> : <Video size={22} />}
                         </button>
-                        <button onClick={() => setShowHelp(!showHelp)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
-                            <Info size={22} className="text-blue-500" />
+                        <button
+                            onClick={() => setShowHelp(!showHelp)}
+                            className="p-2 rounded-full transition-colors"
+                            style={{ color: 'var(--color-info)' }}
+                            onMouseEnter={e => e.currentTarget.style.background = 'var(--color-info-bg)'}
+                            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                            <Info size={22} />
                         </button>
                     </div>
                 </div>
             </header>
 
-            <main className="max-w-7xl mx-auto px-4 py-6 mb-20">
+            <main className="max-w-7xl mx-auto px-4 py-6 mb-10">
                 <div className="flex flex-col lg:flex-row gap-8">
 
                     {/* ZONE VISUELLE */}
                     <div className="flex-1 space-y-6">
                         <div
                             ref={containerRef}
-                            className={`relative bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden group transition-all ${isFullscreen ? 'fixed inset-0 z-50 rounded-none' : 'p-2'
-                                }`}
+                            className={`relative rounded-[2.5rem] shadow-xl overflow-hidden transition-all ${
+                                isFullscreen ? 'fixed inset-0 z-50 rounded-none' : 'p-2'
+                            }`}
+                            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
                         >
                             {!isRunning && (
                                 <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20">
-                                    <div className="bg-amber-500 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-2">
+                                    <div className="px-4 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-2"
+                                        style={{ background: 'var(--color-accent)', color: 'var(--color-earth-brown)' }}>
                                         <AlertCircle size={14} /> {t.editMode.toUpperCase()}
                                     </div>
                                 </div>
                             )}
 
                             {isRecording && (
-                                <div className="absolute top-6 left-6 z-20 flex items-center gap-3 bg-red-500 text-white px-4 py-2 rounded-full shadow-lg">
+                                <div className="absolute top-6 left-6 z-20 flex items-center gap-3 px-4 py-2 rounded-full shadow-lg"
+                                    style={{ background: 'var(--color-danger)', color: '#fff' }}>
                                     <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
                                     <span className="text-sm font-bold">REC {formatTime(recordingTime)}</span>
                                 </div>
@@ -155,16 +176,17 @@ const Lever = () => {
                             <div className="absolute bottom-6 right-6 z-20 flex gap-3">
                                 <button
                                     onClick={isRecording ? stopRecording : startRecording}
-                                    className={`p-4 rounded-2xl shadow-xl active:scale-90 transition-transform ${isRecording
-                                        ? 'bg-red-500 text-white animate-pulse'
-                                        : 'bg-slate-900/90 dark:bg-white/90 text-white dark:text-slate-900'
-                                        }`}
+                                    className="p-4 rounded-2xl shadow-xl active:scale-90 transition-transform"
+                                    style={isRecording
+                                        ? { background: 'var(--color-danger)', color: '#fff' }
+                                        : { background: 'var(--btn-overlay-bg)', color: 'var(--btn-overlay-text)' }}
                                 >
                                     {isRecording ? <StopCircle size={22} /> : <Video size={22} />}
                                 </button>
                                 <button
                                     onClick={() => setIsFullscreen(!isFullscreen)}
-                                    className="p-4 bg-slate-900/90 dark:bg-white/90 text-white dark:text-slate-900 rounded-2xl shadow-xl active:scale-90"
+                                    className="p-4 rounded-2xl shadow-xl active:scale-90 transition-transform"
+                                    style={{ background: 'var(--btn-overlay-bg)', color: 'var(--btn-overlay-text)' }}
                                 >
                                     {isFullscreen ? <Minimize2 size={22} /> : <Maximize2 size={22} />}
                                 </button>
@@ -178,18 +200,21 @@ const Lever = () => {
                                 leverType={leverType}
                                 rotation={rotation}
                                 equilibrium={equilibrium}
-                                momentLeft={momentLeft}  
+                                momentLeft={momentLeft}
                                 momentRight={momentRight}
                                 isRunning={isRunning}
                                 isFullscreen={isFullscreen}
                             />
                         </div>
 
-                        <div className="bg-white dark:bg-slate-900 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 shadow-sm">
-                            <h3 className="flex items-center gap-2 font-bold text-xl mb-3">
-                                <BookOpen className="text-blue-500" /> Observation
+                        {/* Observation */}
+                        <div className="p-6 rounded-[2rem] shadow-sm"
+                            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+                            <h3 className="flex items-center gap-2 font-bold text-lg mb-3"
+                                style={{ color: 'var(--color-text-primary)' }}>
+                                <BookOpen size={20} style={{ color: 'var(--color-info)' }} /> Observation
                             </h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed italic text-lg">
+                            <p className="leading-relaxed italic" style={{ color: 'var(--color-text-secondary)' }}>
                                 "M₁ × d₁ = M₂ × d₂ — L'équilibre des moments"
                             </p>
                         </div>
